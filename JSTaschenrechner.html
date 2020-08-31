@@ -6,23 +6,36 @@
     <title>Taschenrechner</title>
     <script type="text/javascript">
         <!--
+        var checkEqu = false;
         function Check(Eingabe) {
-            var nur_das ="0123456789[]()-+*%/";
-            for (var i = 0; i < Eingabe.length; i++)
-                if (nur_das.indexOf(Eingabe.charAt(i))<0 ) return false;
+            var nur_das = "0123456789[]().-+*%/";
+            for (var i = 0; i < Eingabe.length; i++) {
+                if (nur_das.indexOf(Eingabe.charAt(i)) < 0) {
+                    return false;
+                }
+            }
             return true;
         }
 
         function Ergebnis() {
             var x = 0;
-            if (Check(window.document.Rechner.Display.value))
+            if (Check(window.document.Rechner.Display.value)) {
                 x = eval(window.document.Rechner.Display.value);
-            window.document.Rechner.Display.value = x;
+            }
+            window.document.Rechner.Display.value = Math.round(x * 100) / 100;
+            checkEqu = true;
         }
 
         function Hinzufuegen(Zeichen) {
-            window.document.Rechner.Display.value =
-                window.document.Rechner.Display.value + Zeichen;
+            if (checkEqu) {
+                window.document.Rechner.Display.value = null;
+                window.document.Rechner.Display.value =
+                    window.document.Rechner.Display.value + Zeichen;
+                checkEqu = false;
+            } else {
+                window.document.Rechner.Display.value =
+                    window.document.Rechner.Display.value + Zeichen;
+            }
         }
 
         function Sonderfunktion(Funktion) {
@@ -40,7 +53,7 @@
                 if(Funktion == "log") {
                     var x = 0;
                     x = eval(window.document.Rechner.Display.value);
-                    window.document.Rechner.Display.value = Math.log(x);
+                    window.document.Rechner.Display.value = Math.log10(x);
                 }
             } else window.document.Rechner.Display.value = 0
         }
@@ -92,10 +105,17 @@
                     <td><input type="button" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke" width="60" height="60" class="button" value="  /   " onClick="Hinzufuegen('/')"></td>
                 </tr>
                 <tr>
-                    <td><input type="button" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke" width="60" height="60" class="button" value="sqrt " onClick="Sonderfunktion('sqrt')"></td>
-                    <td><input type="button" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke" width="60" height="60" class="button" value=" pow " onClick="Sonderfunktion('pow')"></td>
-                    <td><input type="button" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke" width="60" height="60" class="button" value=" log " onClick="Sonderfunktion('log')"></td>
-                    <td><input type="reset"  style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke" width="60" height="60" class="button" value="  C  "></td>
+                    <td><input type="button" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke"
+                               width="60" height="60" class="button" value=" sqrt " onClick="Sonderfunktion('sqrt')">
+                    </td>
+                    <td><input type="button" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke"
+                               width="60" height="60" class="button" value=" pow2 " onClick="Sonderfunktion('pow')">
+                    </td>
+                    <td><input type="button" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke"
+                               width="60" height="60" class="button" value=" log10 " onClick="Sonderfunktion('log')">
+                    </td>
+                    <td><input type="reset" style="background-color: #1800b8; border-color: #1800b8; color: whitesmoke"
+                               width="60" height="60" class="button" value="  C  "></td>
                 </tr>
             </table>
         </td></tr></table>
